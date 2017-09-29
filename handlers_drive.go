@@ -9,9 +9,9 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/prasmussen/gdrive/auth"
-	"github.com/prasmussen/gdrive/cli"
-	"github.com/prasmussen/gdrive/drive"
+	"github.com/khoazero123/gdrive/auth"
+	"github.com/khoazero123/gdrive/cli"
+	"github.com/khoazero123/gdrive/drive"
 )
 
 const ClientId = "367116221053-7n0vf5akeru7on6o2fjinrecpdoe99eg.apps.googleusercontent.com"
@@ -124,6 +124,7 @@ func uploadHandler(ctx cli.Context) {
 		Mime:        args.String("mime"),
 		Recursive:   args.Bool("recursive"),
 		Share:       args.Bool("share"),
+		Email:       args.String("email"),
 		Delete:      args.Bool("delete"),
 		ChunkSize:   args.Int64("chunksize"),
 		Timeout:     durationInSeconds(args.Int64("timeout")),
@@ -141,6 +142,7 @@ func uploadStdinHandler(ctx cli.Context) {
 		Parents:     args.StringSlice("parent"),
 		Mime:        args.String("mime"),
 		Share:       args.Bool("share"),
+		Email:       args.String("email"),
 		ChunkSize:   args.Int64("chunksize"),
 		Timeout:     durationInSeconds(args.Int64("timeout")),
 		Progress:    progressWriter(args.Bool("noProgress")),

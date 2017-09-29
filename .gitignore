@@ -7,5 +7,6 @@ _release/bin
 Session.vim
 .netrwhist
 gdrive
+gdrive.exe
 gdrive.sh
 .vscode/

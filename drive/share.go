@@ -85,6 +85,21 @@ func (self *Drive) shareAnyoneReader(fileId string) error {
 	return nil
 }
 
+func (self *Drive) shareUserReader(fileId string, email string) error {
+	permission := &drive.Permission{
+		Role: "reader",
+		Type: "user",
+		EmailAddress: email,
+	}
+
+	_, err := self.service.Permissions.Create(fileId, permission).Do()
+	if err != nil {
+		return fmt.Errorf("Failed to share file to %s: %s", email, err)
+	}
+
+	return nil
+}
+
 type printPermissionsArgs struct {
 	out         io.Writer
 	permissions []*drive.Permission

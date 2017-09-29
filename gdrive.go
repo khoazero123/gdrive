@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/prasmussen/gdrive/cli"
+	"github.com/khoazero123/gdrive/cli"
 )
 
 const Name = "gdrive"
@@ -240,6 +240,11 @@ func main() {
 						Description: "Share file",
 						OmitValue:   true,
 					},
+					cli.StringFlag{
+						Name:        "email",
+						Patterns:    []string{"--email"},
+						Description: "Email",
+					},
 					cli.BoolFlag{
 						Name:        "delete",
 						Patterns:    []string{"--delete"},
@@ -294,6 +299,11 @@ func main() {
 						Patterns:    []string{"--share"},
 						Description: "Share file",
 						OmitValue:   true,
+					},
+					cli.StringFlag{
+						Name:        "email",
+						Patterns:    []string{"--email"},
+						Description: "Email",
 					},
 					cli.IntFlag{
 						Name:         "timeout",

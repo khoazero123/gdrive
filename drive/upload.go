@@ -21,6 +21,7 @@ type UploadArgs struct {
 	Mime        string
 	Recursive   bool
 	Share       bool
+	Email       string
 	Delete      bool
 	ChunkSize   int64
 	Timeout     time.Duration
@@ -63,12 +64,20 @@ func (self *Drive) Upload(args UploadArgs) error {
 	fmt.Fprintf(args.Out, "Uploaded %s at %s/s, total %s\n", f.Id, formatSize(rate, false), formatSize(f.Size, false))
 
 	if args.Share {
-		err = self.shareAnyoneReader(f.Id)
+		if args.Email != "" {
+			time.Sleep(300 * time.Millisecond)
+			err = self.shareUserReader(f.Id, args.Email)
+		} else {
+			err = self.shareAnyoneReader(f.Id)
+		}
 		if err != nil {
 			return err
 		}
-
-		fmt.Fprintf(args.Out, "File is readable by anyone at %s\n", f.WebContentLink)
+		if args.Email != "" {
+			fmt.Fprintf(args.Out, "File shared to %s at: %s\n", args.Email, f.WebContentLink)
+		} else {
+			fmt.Fprintf(args.Out, "File is readable by anyone at: %s\n", f.WebContentLink)
+		}
 	}
 
 	if args.Delete {
@@ -206,6 +215,7 @@ type UploadStreamArgs struct {
 	Parents     []string
 	Mime        string
 	Share       bool
+	Email		string
 	ChunkSize   int64
 	Progress    io.Writer
 	Timeout     time.Duration
